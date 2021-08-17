@@ -1,5 +1,10 @@
 # FCVAR
-An R Package for the Fractionally Cointegrated VAR Model
+
+
+Software for estimation and inference with the Fractionally Cointegrated VAR Model.
+
+This repo is the devlopment version, including the code base for packages using R, Matlab and Stata. For the R package, please see https://github.com/LeeMorinUCF/FCVAR 
+
 
 ## Description
 
