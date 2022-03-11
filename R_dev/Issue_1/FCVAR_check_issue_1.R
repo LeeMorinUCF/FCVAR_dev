@@ -148,23 +148,6 @@ library(rhub)
 
 
 
-# Now make more rigorous tests for submission.
-
-
-# > library(rhub)
-#
-# > rhub_results <- rhub::check_for_cran()
-#
-# rhub_results$cran_summary()
-
-
-# Found problems related to differences in numerical precision across platforms.
-# expect_equal(10, 10)
-# expect_equal(10, 10 + 1e-7)
-# expect_equal(10, 10 + 1e-6)
-# expect_equal(10, 11)
-
-
 
 # Common sequence of builds, tests and checks.
 devtools::load_all()
