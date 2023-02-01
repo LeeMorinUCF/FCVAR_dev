@@ -564,8 +564,8 @@ r1 <- 0
 r2 <- 1
 
 # Number of bootstrap samples to generate
-# B <- 999
-B <- 99
+B <- 999
+# B <- 99
 
 set.seed(42)
 FCVARbootRank_stats <- FCVARbootRank(x1, k, opt, r1, r2, B)
@@ -596,6 +596,8 @@ cat(sprintf('P-value (asy): \t %1.3f\n', rankTestStats$pv[1]))
 # Plot the density of the bootstrap rank statistic
 #--------------------------------------------------------------------------------
 
+hist(LR_Rnk)
+
 # Estimate kernel density
 LR_Rnk_density <- density(LR_Rnk)
 
@@ -603,8 +605,9 @@ LR_Rnk_density <- density(LR_Rnk)
 # over the same range as the bootstrap distribution.
 # LR_Rnk_range <- seq(min(LR_Rnk_density$x), max(LR_Rnk_density$x), 
 #                     by = 0.10)
-LR_Rnk_range <- seq(0, 30, 
-                    by = 1)
+LR_Rnk_asy_bin_width <- 0.5
+LR_Rnk_range <- seq(0, 40, 
+                    by = LR_Rnk_asy_bin_width)
 LR_Rk_num <- length(LR_Rnk_range)
 
 # Settings for calculation of P-values
@@ -626,9 +629,9 @@ for (i in 1:LR_Rk_num) {
 }
 
 
-# Trnslate into density at each gridpoint.
-LR_Rnk_asy <- LR_Rnk_pvals[1:(LR_Rk_num-1)] - 
-  LR_Rnk_pvals[2:LR_Rk_num]
+# Translate into density at each gridpoint.
+LR_Rnk_asy <- (LR_Rnk_pvals[1:(LR_Rk_num-1)] - 
+                 LR_Rnk_pvals[2:LR_Rk_num])/LR_Rnk_asy_bin_width
 
 # fig_dir <- '~/Research/FCVAR/RJ_draft_v1/Figures'
 # fig_ext <- 'png'
@@ -639,12 +642,12 @@ plot(LR_Rnk_density,
               sprintf('(%d bootstrap samples and b = %2.3f)',
                       B, m1$coeffs$db[2])),
      xlab = 'Rank Statistic',
-     xlim = c(-5, 35),
-     ylim = c(0, 0.2),
+     xlim = c(-1, 40),
+     ylim = c(0, 0.15),
      lwd = 3,
      col = 'blue')
 # Plot the density for the asymptotic distribution.
-lines(LR_Rnk_range[2:LR_Rk_num],
+lines(LR_Rnk_range[1:(LR_Rk_num - 1)],
       LR_Rnk_asy,
       col = 'red',
       lwd = 3,
